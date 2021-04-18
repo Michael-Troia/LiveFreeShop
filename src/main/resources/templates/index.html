@@ -11,23 +11,28 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <h1>LiveFree Homepage</h1>
 
 <div sec:authorize="isAuthenticated()">
-    This content is only shown to authenticated users.
-    User ID: <span th:text="${#authentication.principal.id}"/>
-    Username: <span th:text="${#authentication.principal.username}"/>
+    <h2>Inventory</h2>
 
     <table>
         <tr>
             <th>Name</th>
             <th>Quantity</th>
             <th></th>
+            <th></th>
         </tr>
         <tr th:each="item: ${items}">
             <td th:text="${item.name}"></td>
             <td th:text="${item.quantity}"></td>
-            <td><a th:href="@{/item/edit/{id} (id=${item.id})}" th:method="get">Edit</a></td>
+            <td><a th:href="@{/item/edit/{id} (id=${item.id})}" th:method="get" class="btn btn-secondary">Update</a></td>
+            <td>
+                <form th:action="@{/item/delete/{id} (id=${item.id})}" th:method="post">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Remove</button>
+                </form>
+            </td>
         </tr>
     </table>
     <hr>
+    <h2>Add New Item</h2>
     <form th:action="@{/item/create}" th:method="post" th:object="${newItem}">
         Item Name
         <input th:field="*{name}" />

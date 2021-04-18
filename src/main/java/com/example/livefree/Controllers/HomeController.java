@@ -45,4 +45,11 @@ public class HomeController {
         itemRepo.save(item);
         return "redirect:/inventory";
     }
+
+    @PostMapping("/item/delete/{id}")
+    public String deleteItem(@PathVariable long id){
+        Item item = itemRepo.findById(id);
+        itemRepo.delete(item);
+        return "redirect:/inventory";
+    }
 }
