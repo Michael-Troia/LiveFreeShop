@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="partials.html :: head(title)">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials.html :: navbar"></nav>
+
+<h1>Update Inventory</h1>
+
+<div sec:authorize="isAuthenticated()">
+    This content is only shown to authenticated users.
+    User ID: <span th:text="${#authentication.principal.id}"/>
+    Username: <span th:text="${#authentication.principal.username}"/>
+
+    <form th:action="@{/item/edit/{id} (id=${item.id})}" th:method="post" th:object="${item}">
+        <input th:field="*{name}" th:value="${item.name}">
+        <input th:field="*{quantity}" th:value="${item.quantity}">
+        <input type="submit" value="save">
+    </form>
+</div>
+
+</body>
+</html>

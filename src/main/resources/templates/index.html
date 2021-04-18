@@ -19,12 +19,24 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <tr>
             <th>Name</th>
             <th>Quantity</th>
+            <th></th>
         </tr>
         <tr th:each="item: ${items}">
             <td th:text="${item.name}"></td>
             <td th:text="${item.quantity}"></td>
+            <td><a th:href="@{/item/edit/{id} (id=${item.id})}" th:method="get">Edit</a></td>
         </tr>
     </table>
+    <hr>
+    <form th:action="@{/item/create}" th:method="post" th:object="${newItem}">
+        Item Name
+        <input th:field="*{name}" />
+        <br />
+        Quantity
+        <input th:field="*{quantity}" />
+        <br />
+        <input type="submit" />
+    </form>
 </div>
 
 </body>
