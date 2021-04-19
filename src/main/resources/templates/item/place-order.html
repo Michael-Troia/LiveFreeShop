@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="partials.html :: head(title)">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials.html :: navbar"></nav>
+
+<h1>Place order</h1>
+
+<div sec:authorize="isAuthenticated()">
+    <p>Item:</p>
+    <h3 th:text="${item.name}"></h3>
+    <p>Cost per unit:</p>
+    <h3 th:text="${item.cost}"></h3>
+
+    <hr>
+    <form th:action="@{/item/order/{id} (id=${item.id})}" th:method="post" th:object="${newOrder}">
+        <label for="amount">Order Quantity</label>
+        <input id="amount" th:field="*{quantity}">
+        <input type="submit" value="Place Order">
+    </form>
+</div>
+
+</body>
+</html>

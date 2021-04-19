@@ -1,6 +1,8 @@
 package com.example.livefree.Models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -16,16 +18,22 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonBackReference
+    private List<Order> orders;
+
     public User() {
     }
 
-    public User(String username) {
+    public User(String username, String password) {
         this.username = username;
+        this.password = password;
     }
 
-    public User(long id, String username) {
+    public User(long id, String username, String password) {
         this.id = id;
         this.username = username;
+        this.password = password;
     }
 
     public User(User copy){

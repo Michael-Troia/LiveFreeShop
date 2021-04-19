@@ -12,17 +12,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div sec:authorize="isAuthenticated()">
     <h2>Inventory</h2>
-
     <table>
         <tr>
-            <th>Name</th>
-            <th>Quantity</th>
+            <th>Item</th>
+            <th>Left in Stock</th>
+            <th>Cost</th>
             <th></th>
             <th></th>
         </tr>
         <tr th:each="item: ${items}">
             <td th:text="${item.name}"></td>
             <td th:text="${item.quantity}"></td>
+            <td th:text="${item.cost}"></td>
             <td><a th:href="@{/item/edit/{id} (id=${item.id})}" th:method="get" class="btn btn-secondary">Update</a></td>
             <td>
                 <form th:action="@{/item/delete/{id} (id=${item.id})}" th:method="post">
@@ -40,6 +41,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         Quantity
         <input th:field="*{quantity}" />
         <br />
+        Cost
+        <input th:field="*{cost}">
         <input type="submit" />
     </form>
 </div>
