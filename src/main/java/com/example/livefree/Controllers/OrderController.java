@@ -48,13 +48,21 @@ public class OrderController {
                                 @ModelAttribute Order order,
                                 @ModelAttribute User user){
         Item item = itemRepo.findById(id);
-        order.setUser(user);
-        order.setItem(item.getName());
-        order.setCost(item.getCost() * order.getQuantity());
-        orderRepo.save(order);
+        Order newOrder = new Order();
+        newOrder.setUser(user);
+        newOrder.setItem(item.getName());
+        newOrder.setCost(item.getCost() * order.getQuantity());
+        newOrder.setQuantity(order.getQuantity());
+        orderRepo.save(newOrder);
         item.setQuantity(item.getQuantity() - order.getQuantity());
         itemRepo.save(item);
 
         return "redirect:/inventory";
+    }
+
+    @GetMapping("/item/order/view")
+    public String viewOrders(Model viewModel){
+        viewModel.addAttribute("orders", orderRepo.findAll());
+        return "item/view-orders";
     }
 }
